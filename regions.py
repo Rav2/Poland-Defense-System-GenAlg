@@ -1,5 +1,5 @@
 # data about polish regions
-# from  https://pl.wikipedia.org/wiki/Województwo
+# from  https://pl.wikipedia.org/wiki/Wojewodztwo
 # written down 25.11.2016
 
 
@@ -60,71 +60,7 @@ dolnoslaskie = {
                         'LT' : 0.0,
                         'RU' : 0.0
                     }
-kujawsko_pomorskie = {
-                        'name' : 'kujawsko-pomorskie',
-                        'weight' : 1,
-                        'pop' : 2096404,
-                        'area' : 17971.34, # km^2
-                        'DE' : 0.0, #km
-                        'CZ' : 0.0,
-                        'SK' : 0.0,
-                        'UA' : 0.0,
-                        'BY' : 0.0,
-                        'LT' : 0.0,
-                        'RU' : 0.0
-                    }
-lubelskie = {
-                        'name' : 'lubelskie',
-                        'weight' : 1,
-                        'pop' : 2165651,
-                        'area' : 25122.46, # km^2
-                        'DE' : 0.0, #km
-                        'CZ' : 0.0,
-                        'SK' : 0.0,
-                        'UA' : 0.0,
-                        'BY' : 165.2,
-                        'LT' : 0.0,
-                        'RU' : 282.5
-                    }
-lodzkie = {
-                        'name' : 'lodzkie',
-                        'weight' : 1,
-                        'pop' : 2524651,
-                        'area' : 18218.95, # km^2
-                        'DE' : 0.0, #km
-                        'CZ' : 0.0,
-                        'SK' : 0.0,
-                        'UA' : 0.0,
-                        'BY' : 0.0,
-                        'LT' : 0.0,
-                        'RU' : 0.0
-                    }
-malopolskie = {
-                        'name' : 'malopolskie',
-                        'weight' : 1,
-                        'pop' : 3354077,
-                        'area' : 15182.79, # km^2
-                        'DE' : 0.0, #km
-                        'CZ' : 0.0,
-                        'SK' : 301.6,
-                        'UA' : 0.0,
-                        'BY' : 0.0,
-                        'LT' : 0.0,
-                        'RU' : 0.0
-                    }
-mazowieckie = {
-                        'name' : 'mazowieckie',
-                        'weight' : 3, #capital city
-                        'pop' : 5301760,
-                        'area' : 35558.47, # km^2
-                        'DE' : 0.0, #km
-                        'CZ' : 0.0,
-                        'SK' : 0.0,
-                        'UA' : 0.0,
-                        'BY' : 0.0,
-                        'LT' : 0.0,
-                        'RU' : 0.0
-                    }
+
 opolskie = {
                         'name' : 'opolskie',
                         'weight' : 1,
@@ -138,45 +74,8 @@ opolskie = {
                         'LT' : 0.0,
                         'RU' : 0.0
                     }
-podkarpackie = {
-                        'name' : 'podkarpackie',
-                        'weight' : 1,
-                        'pop' : 2129951,
-                        'area' : 17845.76, # km^2
-                        'DE' : 0.0, #km
-                        'CZ' : 0.0,
-                        'SK' : 134.0,
-                        'UA' : 239.0,
-                        'BY' : 0.0,
-                        'LT' : 0.0,
-                        'RU' : 0.0
-                    }
-podlaskie = {
-                        'name' : 'podlaskie',
-                        'weight' : 1,
-                        'pop' : 1198690,
-                        'area' : 20187.02, # km^2
-                        'DE' : 0.0, #km
-                        'CZ' : 0.0,
-                        'SK' : 0.0,
-                        'UA' : 0.0,
-                        'BY' : 236.3,
-                        'LT' : 100.3,
-                        'RU' : 0.0
-                    }
-pomorskie = {
-                        'name' : 'pomorskie',
-                        'weight' : 1,
-                        'pop' : 2290070,
-                        'area' : 18310.34, # km^2
-                        'DE' : 0.0, #km
-                        'CZ' : 0.0,
-                        'SK' : 0.0,
-                        'UA' : 0.0,
-                        'BY' : 0.0,
-                        'LT' : 0.0,
-                        'RU' : 0.8
-                    }
+
+
 slaskie = {
                         'name' : 'slaskie',
                         'weight' : 1,
@@ -190,19 +89,66 @@ slaskie = {
                         'LT' : 0.0,
                         'RU' : 0.0
                     }
-swietokrzyskie = {
-                        'name' : 'swietokrzyskie',
+
+malopolskie = {
+                        'name' : 'malopolskie',
                         'weight' : 1,
-                        'pop' : 1273995,
-                        'area' : 11710.50	, # km^2
+                        'pop' : 3354077,
+                        'area' : 15182.79, # km^2
                         'DE' : 0.0, #km
                         'CZ' : 0.0,
-                        'SK' : 0.0,
+                        'SK' : 301.6,
                         'UA' : 0.0,
                         'BY' : 0.0,
                         'LT' : 0.0,
                         'RU' : 0.0
                     }
+
+podkarpackie = {
+                        'name' : 'podkarpackie',
+                        'weight' : 1,
+                        'pop' : 2129951,
+                        'area' : 17845.76, # km^2
+                        'DE' : 0.0, #km
+                        'CZ' : 0.0,
+                        'SK' : 134.0,
+                        'UA' : 239.0,
+                        'BY' : 0.0,
+                        'LT' : 0.0,
+                        'RU' : 0.0
+                    }
+
+
+lubelskie = {
+                        'name' : 'lubelskie',
+                        'weight' : 1,
+                        'pop' : 2165651,
+                        'area' : 25122.46, # km^2
+                        'DE' : 0.0, #km
+                        'CZ' : 0.0,
+                        'SK' : 0.0,
+                        'UA' : 0.0,
+                        'BY' : 165.2,
+                        'LT' : 0.0,
+                        'RU' : 282.5
+                    }
+
+
+
+podlaskie = {
+                        'name' : 'podlaskie',
+                        'weight' : 1,
+                        'pop' : 1198690,
+                        'area' : 20187.02, # km^2
+                        'DE' : 0.0, #km
+                        'CZ' : 0.0,
+                        'SK' : 0.0,
+                        'UA' : 0.0,
+                        'BY' : 236.3,
+                        'LT' : 100.3,
+                        'RU' : 0.0
+                    }
+
 warminsko_mazurskie = {
                         'name' : 'warminsko-mazurskie',
                         'weight' : 1,
@@ -216,6 +162,54 @@ warminsko_mazurskie = {
                         'LT' : 0.0,
                         'RU' : 208.3
                     }
+
+pomorskie = {
+                        'name' : 'pomorskie',
+                        'weight' : 1,
+                        'pop' : 2290070,
+                        'area' : 18310.34, # km^2
+                        'DE' : 0.0, #km
+                        'CZ' : 0.0,
+                        'SK' : 0.0,
+                        'UA' : 0.0,
+                        'BY' : 0.0,
+                        'LT' : 0.0,
+                        'RU' : 0.8
+                    }
+
+mazowieckie = {
+                        'name' : 'mazowieckie',
+                        'weight' : 3, #capital city
+                        'pop' : 5301760,
+                        'area' : 35558.47, # km^2
+                        'DE' : 0.0, #km
+                        'CZ' : 0.0,
+                        'SK' : 0.0,
+                        'UA' : 0.0,
+                        'BY' : 0.0,
+                        'LT' : 0.0,
+                        'RU' : 0.0
+                    }
+
+
+
+
+
+
+kujawsko_pomorskie = {
+                        'name' : 'kujawsko-pomorskie',
+                        'weight' : 1,
+                        'pop' : 2096404,
+                        'area' : 17971.34, # km^2
+                        'DE' : 0.0, #km
+                        'CZ' : 0.0,
+                        'SK' : 0.0,
+                        'UA' : 0.0,
+                        'BY' : 0.0,
+                        'LT' : 0.0,
+                        'RU' : 0.0
+                    }
+
 wielkopolskie = {
                         'name' : 'wielkopolskie',
                         'weight' : 1,
@@ -229,3 +223,42 @@ wielkopolskie = {
                         'LT' : 0.0,
                         'RU' : 0.0
                     }
+
+
+
+
+lodzkie = {
+                        'name' : 'lodzkie',
+                        'weight' : 1,
+                        'pop' : 2524651,
+                        'area' : 18218.95, # km^2
+                        'DE' : 0.0, #km
+                        'CZ' : 0.0,
+                        'SK' : 0.0,
+                        'UA' : 0.0,
+                        'BY' : 0.0,
+                        'LT' : 0.0,
+                        'RU' : 0.0
+                    }
+
+
+
+
+
+
+
+swietokrzyskie = {
+                        'name' : 'swietokrzyskie',
+                        'weight' : 1,
+                        'pop' : 1273995,
+                        'area' : 11710.50	, # km^2
+                        'DE' : 0.0, #km
+                        'CZ' : 0.0,
+                        'SK' : 0.0,
+                        'UA' : 0.0,
+                        'BY' : 0.0,
+                        'LT' : 0.0,
+                        'RU' : 0.0
+                    }
+
+

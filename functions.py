@@ -8,33 +8,45 @@ brigade_area_control = 150 # km^2
 # returns population, N members
 def init (N, option):
     if option == 'binomial':
-        return np.random.binomial(24, 0.5, size=(N, 16))
+        return np.random.binomial(24, 0.5, size=(N, 16)) # p=0.5 probability of success, 24 - upper bound
     else:
         return np.random.randint(0, 24, size=(N, 16))
 
 # do przemyslenia obie funkcje
+# n - liczba brygad umieszczonych
 def f_teritorial(n, eps, A, region):
-    return A * region['weight'] * log(eps + n/(region['area']*brigade_area_control))
+    return A * region['weight'] * log(eps + n*brigade_area_control/region['area'])
 
 def f_danger(n, B, region):
     eff_de = eff_cz = eff_sk = eff_ua = eff_by = eff_lt = eff_ru = 1.0
+    # region [country] - length of the border
     if region['DE'] > 0.0:
-        eff_de = n * threat_coef['DE'] / (region['DE'] * brigade_border_control)
+        eff_de = n * threat_coef['DE'] * (region['DE'] / brigade_border_control)
     if region['CZ'] > 0.0:
-        eff_cz = n * threat_coef['CZ'] / (region['CZ'] * brigade_border_control)
+        eff_cz = n * threat_coef['CZ'] * (region['CZ'] ) / brigade_border_control
     if region['SK'] > 0.0:
-        eff_sk = n * threat_coef['SK'] / (region['SK'] * brigade_border_control)
+        eff_sk = n * threat_coef['SK'] * (region['SK'] ) / brigade_border_control
     if region['UA'] > 0.0:
-        eff_ua = n * threat_coef['UA'] / (region['UA'] * brigade_border_control)
+        eff_ua = n * threat_coef['UA'] * (region['UA'] ) / brigade_border_control
     if region['BY'] > 0.0:
-        eff_by = n * threat_coef['BY'] / (region['BY'] * brigade_border_control)
+        eff_by = n * threat_coef['BY']* (region['BY'] ) / brigade_border_control
     if region['LT'] > 0.0:
-        eff_lt = n * threat_coef['LT'] / (region['LT'] * brigade_border_control)
+        eff_lt = n * threat_coef['LT'] * (region['LT'] ) / brigade_border_control
     if region['RU'] > 0.0:
-        eff_ru = n * threat_coef['RU'] / (region['RU'] * brigade_border_control)
+        eff_ru = n * threat_coef['RU'] * (region['LT'] ) / brigade_border_control
 
-    eff = eff_de * eff_cz * eff_sk * eff_ua * eff_by * eff_lt * eff_ru
-    return B * region['weight']*exp(eff) -1
+    eff = eff_de + eff_cz + eff_sk + eff_ua + eff_by + eff_lt + eff_ru
+    print "region ", region['name']
+    # print "eff_de= ", eff_de
+    # print "eff_cz= ", eff_cz
+    # print "eff_sk= ", eff_sk
+    # print "eff_ua= ", eff_ua
+    # print "eff_by= ", eff_by
+    # print "eff_lt= ", eff_lt
+    # print "eff_ru= ", eff_ru
+    print "eff = ", eff
+    # before: exp(eff)-1, new: log(eff) + const - TODO: find the proper additive const to make func>0
+    return B * region['weight']*log(eff) +5
 
 
 def f(n, eps, A, B, region):
