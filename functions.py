@@ -15,7 +15,7 @@ def init (N, option):
 # do przemyslenia obie funkcje
 # n - liczba brygad umieszczonych
 def f_teritorial(n, eps, A, region):
-    return A * region['weight'] * log(eps + n*brigade_area_control/region['area'])
+    return A * region['weight'] * log(eps + n/brigade_area_control*region['area'])
 
 def f_danger(n, B, region):
     eff_de = eff_cz = eff_sk = eff_ua = eff_by = eff_lt = eff_ru = 1.0
@@ -36,7 +36,7 @@ def f_danger(n, B, region):
         eff_ru = n * threat_coef['RU'] * (region['LT'] ) / brigade_border_control
 
     eff = eff_de + eff_cz + eff_sk + eff_ua + eff_by + eff_lt + eff_ru
-    print "region ", region['name']
+    # print "region ", region['name']
     # print "eff_de= ", eff_de
     # print "eff_cz= ", eff_cz
     # print "eff_sk= ", eff_sk
@@ -46,7 +46,8 @@ def f_danger(n, B, region):
     # print "eff_ru= ", eff_ru
     print "eff = ", eff
     # before: exp(eff)-1, new: log(eff) + const - TODO: find the proper additive const to make func>0
-    return B * region['weight']*log(eff) +5
+    #powinien byc chyba exp, ale z jakims wspolczynnikiem
+    return B * region['weight']*exp(0.01*eff) +10
 
 
 def f(n, eps, A, B, region):
