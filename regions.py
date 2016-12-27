@@ -242,11 +242,6 @@ lodzkie = {
                     }
 
 
-
-
-
-
-
 swietokrzyskie = {
                         'name' : 'swietokrzyskie',
                         'weight' : 1,
