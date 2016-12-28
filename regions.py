@@ -14,6 +14,11 @@ def get_regions():
             }
 
 
+def get_regions_names():
+    return ['zachodnio_pomorskie', 'lubuskie', 'dolnoslaskie', 'opolskie', 'slaskie', 'malopolskie', 'podkarpackie', 'lubelskie', 'podlaskie',
+            'warminsko_mazurskie', 'pomorskie', 'mazowieckie', 'kujawsko_pomorskie', 'wielkopolskie', 'lodzkie', 'swietokrzyskie']
+
+
 def get_regions_list():
     return [zachodnio_pomorskie, lubuskie, dolnoslaskie, opolskie, slaskie, malopolskie, podkarpackie, lubelskie, podlaskie,
             warminsko_mazurskie, pomorskie, mazowieckie, kujawsko_pomorskie, wielkopolskie, lodzkie, swietokrzyskie]
@@ -127,17 +132,17 @@ lubelskie = {
                         'DE' : 0.0, #km
                         'CZ' : 0.0,
                         'SK' : 0.0,
-                        'UA' : 0.0,
+                        'UA' : 282.5,
                         'BY' : 165.2,
                         'LT' : 0.0,
-                        'RU' : 282.5
+                        'RU' : 0.0
                     }
 
 
 
 podlaskie = {
                         'name' : 'podlaskie',
-                        'weight' : 1,
+                        'weight' : 2, # the only NATO passage to Lithuania
                         'pop' : 1198690,
                         'area' : 20187.02, # km^2
                         'DE' : 0.0, #km
@@ -174,7 +179,7 @@ pomorskie = {
                         'UA' : 0.0,
                         'BY' : 0.0,
                         'LT' : 0.0,
-                        'RU' : 0.8
+                        'RU' : 0.0  # really it is 0.8 approx 0.0
                     }
 
 mazowieckie = {
