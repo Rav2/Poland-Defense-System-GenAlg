@@ -8,8 +8,8 @@ def test():
     Main testing function to run all tests.
     :return: nothing
     """
-    goal_func_test()
-
+    # goal_func_test()
+    single_sim_test()
 
 ################################################################################
 def goal_func_test():
@@ -33,5 +33,19 @@ def goal_func_test():
     print(vals_total)
     plt.plot(range(0, 25), vals_total)
     plt.show()
+
+
+def single_sim_test():
+    pop = main(0.5, 1.0, 0.1, 10**-4, 1000)
+    vals = np.zeros(16)
+    for ii in range(0, 16):
+        for em in pop:
+            vals[ii] += em[ii]
+    vals /= 100
+    terminal_view(vals)
+    #TODO:Wyniki sa zle, zobaczyc co jest nie tak? !!!NIE UZYWAC PYTHON 2.X.X!! TO JEST PRZESTARZALE!!! Zalecane 3.5.1
+
+
+
 
 test()

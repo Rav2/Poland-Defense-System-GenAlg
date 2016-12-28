@@ -34,19 +34,21 @@ def main(A, B, C, eps, sim_steps = 100):
                 new_pop[index] = pop[x]
                 index += 1
         pop = new_pop
-        # 2 cross over
+        # 2 CROSS OVER
         probs_cross = np.random.uniform(size=(len(pop), len(pop)))
         to_cross = probs_cross < p_c
         indices = np.ndindex(*probs_cross.shape)
         for index in indices:
             if (index[0] > index[1]) and to_cross[index[0]][index[1]]:
                 func.cross(pop[index[0]], pop[index[1]])
-        # 3 mutation
+        # 3 MUTATION
         for chromosome in pop:
             func.mutate(chromosome, p_m)
-        # 4 inversion
+        # 4 INVERSION
         probs_inv = np.random.uniform(len(pop))
         pop = np.where(probs_inv < p_i, func.inverse(pop), pop)
+        if int(ii*1000/steps) % 10 == 0 and int(ii/steps*100)>0:
+            print(int(ii/steps*100), '% done')
     return pop
 
 if __name__ == "__main__":
