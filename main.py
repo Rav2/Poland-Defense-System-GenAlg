@@ -30,7 +30,9 @@ def main(A, B, C, eps, sim_steps = 100):
         while index < len(pop):
             y = np.random.rand()
             x = np.random.randint(0, len(pop))
-            if y < p_sel[x]:
+            if y < p_sel[index]:
+
+            # if y < p_sel[x]:
                 new_pop[index] = pop[x]
                 index += 1
         pop = new_pop
@@ -53,3 +55,6 @@ def main(A, B, C, eps, sim_steps = 100):
 
 if __name__ == "__main__":
     main(0.5, 1.0, 0.1, 10**-4, 100)
+
+
+# main()

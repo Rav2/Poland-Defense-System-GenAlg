@@ -37,9 +37,9 @@ def init (N, option):
 
 def f_teritorial(n, eps, A, region):
     """
-    Calculates the teritorial defense coeff of the goal function
+    Calculates the territorial defense coeff of the goal function
     :param n: Number of brigades in the region.
-    :param eps: Epsilon paramter.
+    :param eps: Epsilon parameter.
     :param A: Multiplication const.
     :param region: Region object.
     :return: Value of the function for a given region and n.
@@ -117,7 +117,9 @@ def selection(population, A, B, C, eps):
     """
     probabilities = []
     for em in population:
-        probabilities.append(f_chrom(em, A, B, C, eps))
+        prob = f_chrom(em, A, B, C, eps)
+        # print ("probability = ", prob)
+        probabilities.append(prob)
     probabilities = np.array(probabilities)
     return probabilities/np.sum(probabilities)
 

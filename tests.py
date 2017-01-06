@@ -9,7 +9,8 @@ def test():
     :return: nothing
     """
     # goal_func_test()
-    single_sim_test()
+    # single_sim_test()
+    selection_test()
 
 ################################################################################
 def goal_func_test():
@@ -27,13 +28,46 @@ def goal_func_test():
     for chrom in pop:
         vals = []
         for ii in range(0, len(chrom)):
+            # print("chrom[ii]= ", chrom[ii])
+            # print ("regions = ", get_regions_list()[ii])
             vals.append(func.f(chrom[ii], eps, A, B, C, get_regions_list()[ii]))
+            # print("vals = ", vals[ii])
         vals_total.append(sum(vals))#]sum(vals))
+        # print("sum_vals = ", sum(vals))
     terminal_view(vals)
     print(vals_total)
     plt.plot(range(0, 25), vals_total)
     plt.show()
 
+def selection_test():
+    steps = 1 # simulation steps
+    A = 0.5
+    B = 1.0
+    C = 0.1
+    eps = 10**-4
+
+    pop = func.init(4, 'uniform')
+    print ("pop = ", pop)
+    for ii in range(0, steps):
+        # 1 SELECTION
+        p_sel = func.selection(pop, A, B, C, eps)
+        new_pop = np.zeros(shape=pop.shape)
+
+        print("p_sel ", p_sel)
+
+        index = 0
+        while index < len(pop):
+            y = np.random.rand()
+            x = np.random.randint(0, len(pop))
+            print("y = ", y)
+            print("x = ", x)
+
+            if y < p_sel[x]:
+                new_pop[index] = pop[x]
+                index += 1
+        pop = new_pop
+
+        print("end = ", pop)
 
 def single_sim_test():
     pop = main(0.5, 1.0, 0.1, 10**-4, 1000)
