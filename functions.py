@@ -117,12 +117,45 @@ def selection(population, A, B, C, eps):
     """
     probabilities = []
     for em in population:
+        # print ("em = ", em)
         prob = f_chrom(em, A, B, C, eps)
         # print ("probability = ", prob)
         probabilities.append(prob)
+        # print ("probabilities = ", probabilities)
     probabilities = np.array(probabilities)
+    # print ("interesujace = ", probabilities)
     return probabilities/np.sum(probabilities)
 
+
+
+
+def selection_mod(population, A, B, C, eps):
+    """
+    Calculates probabilities for the roulette selection method.
+    :param population:
+    :param A: Teritorial constant.
+    :param B: Danger constant.
+    :param eps: Epsilon for teritorial part.
+    :return: 1D array of probabilities, a value for every chromosome.
+    """
+    probabilities = []
+    first_time = True
+    for em in population:
+        # print ("em = ", em)
+        prob = f_chrom(em, A, B, C, eps)
+        # print ("probability = ", prob)
+        # for checking the boundaries in roulette
+        # if (first_time):
+        #     probabilities.append(prob)
+        #     first_time = False
+        # else:
+            # print ("prob = ", prob)
+            # print ("probabilities[-1] = ", probabilities[-1])
+            # probabilities.append(prob+probabilities[-1])
+        probabilities.append(prob)
+        # print ("probabilities = ", probabilities)
+    probabilities = np.array(probabilities)
+    return probabilities
 
 def cross(chrom1, chrom2):
     """
