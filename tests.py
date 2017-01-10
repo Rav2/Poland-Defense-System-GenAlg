@@ -9,11 +9,23 @@ def test():
     :return: nothing
     """
     # goal_func_test()
-    single_sim_test()
+    # single_sim_test()
     # selection_test()
     # selection_mod_test()
+    crossover_test()
+    # mutation_test()
+    # init_test()
+    # roulette_test()
 
 ################################################################################
+def init_test():
+    N = 4
+    pop = func.init(N, 'multinomial')
+
+    print("pop from init = ", pop)
+
+
+
 def goal_func_test():
     """
     Tests goal function for a given set of parameters and perfectly uniform distributions.
@@ -47,7 +59,7 @@ def selection_test():
     C = 0.1
     eps = 10**-4
 
-    pop = func.init(4, 'uniform')
+    pop = func.init(4, 'multinomial')
     # print ("pop = ", pop)
     for ii in range(0, steps):
         # 1 SELECTION
@@ -77,8 +89,8 @@ def selection_mod_test():
     C = 0.1
     eps = 10 ** -4
 
-    pop_size = 10
-    pop = func.init(pop_size, 'uniform')
+    pop_size = 4
+    pop = func.init(pop_size, 'multinomial')
 
 
 
@@ -110,7 +122,8 @@ def selection_mod_test():
         index = 0
         while (index < len(pop)):
             # random choice on the roullette
-            choice = np.random.uniform(prob_array[0], prob_array[-1])
+            # choice = np.random.uniform(prob_array[0], prob_array[-1])
+            choice = np.random.uniform(0, prob_array[-1])
             print ("choice = ", choice)
             for i in range(pop_size):
                 if(prob_array[i] > choice):
@@ -123,12 +136,63 @@ def selection_mod_test():
 
         pop = new_pop
         print("end = ", pop)
+    return pop
 
+def crossover_test():
+    p_c = 0.7
+    # pop = main(0.5, 1.0, 0.1, 10**-4, 1)
+    # pop = selection_mod_test()
+    distr = np.zeros(shape=(2, 6))
+    distr[0] = [2,4,6,3,8,1]
+    distr[1] = [1,7,5,6,2,3]
+
+    # pop = distr
+    pop = roulette_test()
+    print("pop to cross = ", pop)
+    probs_cross = np.random.uniform(size=(len(pop), len(pop)))
+    to_cross = probs_cross < p_c
+    # return index numbers of all elements in an array
+    indices = np.ndindex(*probs_cross.shape)
+    for index in indices:
+        if (index[0] > index[1]) and to_cross[index[0]][index[1]]:
+    # for i in range(0,2,1):
+            print("i = ", index[0], index[1])
+            print("crossing: ")
+        # print ('index[0] = ', index[0])
+        # print ('index[1] = ', index[1])
+        # func.cross(pop[i], pop[i+2])
+            func.cross(pop[index[0]], pop[index[1]])
+
+    print ("pop after = ", pop)
+    return pop
+
+def mutation_test():
+    p_m = 3*10**-1
+    pop = crossover_test()
+
+    for chromosome in pop:
+        func.mutate(chromosome, p_m)
+
+    print( "after mutation = ", pop)
+
+
+def roulette_test():
+    A = 0.5
+    B = 1.0
+    C = 0.1
+    eps = 10 ** -4
+    pop = func.init(4 ,'multinomial')
+    p_sel = func.selection(pop, A, B, C, eps)
+    print ("before roulette: ", pop)
+    new_pop = func.roulette_select(pop, p_sel, 4)
+
+    print ("after roulette: ", new_pop)
+    return new_pop
 
 
 
 def single_sim_test():
-    pop = main(0.5, 1.0, 0.1, 10**-4, 1000)
+    pop = main(0.5, 1.0, 0.1, 10**-4, 100)
     # print ("population end = ", pop)
     # print ("population sum = ", pop.sum(axis=1))
     vals = np.zeros(16)
