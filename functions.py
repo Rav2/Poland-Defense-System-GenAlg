@@ -23,7 +23,7 @@ def init (N, option):
                 indiv[ii] = np.random.binomial(up_limit, 0.5)
                 up_limit -= indiv[ii]
 
-    # probably more suitable in this case
+    # to ensure genetic diversity of a population
     elif option == 'multinomial':
         distr = np.random.multinomial(24, [1 / 16.] * 16, size=N)
 
@@ -44,7 +44,6 @@ def init (N, option):
             else:
                 indiv[1::2] += 1
 
-    # print ("distribution = ", distr)
     return distr
 
 
@@ -131,17 +130,13 @@ def selection(population, A, B, C, eps):
     :param A: Teritorial constant.
     :param B: Danger constant.
     :param eps: Epsilon for teritorial part.
-    :return: 1D array of probabilities, a value for every chromosome.
+    :return: 1D array of goal function, a value for every chromosome.
     """
     probabilities = []
     for em in population:
-        # print ("em = ", em)
         prob = f_chrom(em, A, B, C, eps)
-        # print ("probability = ", prob)
         probabilities.append(prob)
-        # print ("probabilities = ", probabilities)
     probabilities = np.array(probabilities)
-    # print ("interesujace = ", probabilities)
     return probabilities
 
 def roulette_select(population, fitnesses, N):
@@ -152,14 +147,12 @@ def roulette_select(population, fitnesses, N):
     # Generate probability intervals for each individual - sums from the beginning
     # of array of probabilities
     probabilities = [sum(scaled_fitness[:i+1]) for i in range(len(scaled_fitness))]
-    # print ("probabilitiess = ", probabilities)
 
-    # Draw new population
+    # Create new population
     new_population = np.zeros(shape=(N, 16))
     index =0
     for n in range(N):
         choice = np.random.rand()
-        # print("choice = ", choice)
         for (i, individual) in enumerate(population):
             if choice <= probabilities[i]:
                 new_population[index]= individual
@@ -168,6 +161,7 @@ def roulette_select(population, fitnesses, N):
     return new_population
 
 
+# the same as method 'selection' except returning real probabilities for the members of a population
 def selection_mod(population, A, B, C, eps):
     """
     Calculates probabilities for the roulette selection method.
@@ -179,12 +173,8 @@ def selection_mod(population, A, B, C, eps):
     """
     probabilities = []
     for em in population:
-        # print ("em = ", em)
         prob = f_chrom(em, A, B, C, eps)
-        # print ("prob z celu = ", prob)
-
         probabilities.append(prob)
-        # print ("probabilities = ", probabilities)
     probabilities = np.array(probabilities)
     return probabilities/np.sum(probabilities)
 
@@ -200,18 +190,11 @@ def cross(chrom1, chrom2):
     """
     point =  np.random.randint(1, len(chrom1))
     direction = np.random.rand()
-    # print('cross point = ', point, 'direction=', direction)
     if direction < 0.5: # left
         change = np.sum(chrom1[:point]) - np.sum(chrom2[:point])
-        # print ("change = ", change)
         temp = np.copy(chrom1[:point])
-        # print ("chrom1[:point] before ", chrom1[:point])
-        # print ("chrom2[:point] before", chrom2[:point])
-        # print ("temp = ", temp)
 
         chrom1[:point], chrom2[:point] = chrom2[:point], temp
-        # print ("chrom1[:point] after ", chrom1[:point])
-        # print ("chrom2[:point] after", chrom2[:point])
         if change != 0:
             cross_fix(chrom1[:point], chrom2[:point], int(change))
     else:
@@ -235,22 +218,16 @@ def crossover(selected_pop, N, p_c):
             if (direction < 0.5):
                 change = np.sum(pairs[0][:point]) + np.sum(pairs[1][point:])
                 new_pop[index] = pairs[0][:point]+pairs[1][point:]
-                # print("child = ", new_pop[index], " ", sum(new_pop[index]))
-
                 if change != 24:
-                    # print ("repair")
                     fix_crossover(new_pop[index])
-
                 index += 1
 
 
             else:
                 change = np.sum(pairs[0][point:]) + np.sum(pairs[1][:point])
                 new_pop[index] = pairs[1][:point] + pairs[0][point:]
-
                 if change != 24:
                     fix_crossover(new_pop[index])
-
                 index += 1
 
 
@@ -267,12 +244,10 @@ def crossover(selected_pop, N, p_c):
 
 def fix_crossover(individual):
     change = int(24 - sum(individual))
-    # print("sum = ", change)
 
     # in case of an excess
     if (change > 0):
         for ii in range(0, change):
-
             individual[np.random.randint(0, len(individual))] += 1
     else:
         for ii in range(0, -change):
@@ -280,7 +255,6 @@ def fix_crossover(individual):
             if(individual[rand_index] >0):
                 individual[rand_index] -= 1
 
-    # print("after repair = ", sum(individual))
 
 def pmx_cross(chrom1, chrom2):
     """
@@ -293,7 +267,7 @@ def pmx_cross(chrom1, chrom2):
     :return: nothing (arguments are altered)
     """
 
-    # assuming that chromosem have the same length
+    # assuming that chromosomes have the same length
     cpoint1 =  np.random.randint(1, len(chrom1))
     cpoint2 =np.random.randint(1, len(chrom1)-1)
 
@@ -302,13 +276,10 @@ def pmx_cross(chrom1, chrom2):
     else:
         cpoint1, cpoint2 = cpoint2, cpoint1
 
-    # print('cross point 1 = ', cpoint1, 'cross point 2 = ', cpoint2)
 
     values_change1 = np.zeros(len(cpoint2-cpoint1))
     values_change2 = np.zeros(len(cpoint2-cpoint1))
     for i in range(cpoint1, cpoint2):
-        # temp1 = chrom1[i]
-        # temp2 = chrom2[i]
         values_change1.append(chrom1[i])
         values_change2.append(chrom2[i])
         chrom1[i], chrom2[i] = chrom2[i], chrom1[i]
@@ -319,7 +290,7 @@ def pmx_cross(chrom1, chrom2):
         if chrom1[i] in values_change2:
             chrom1[i] = values_change1[values_change2.index(chrom1[i])]
 
-    #not finished because not suitable here :(((((
+    #not finished because not suitable here.
 
 
 
@@ -353,19 +324,14 @@ def mutate(chrom, P):
     :return: Chromosome after mutation.
     """
     randoms = np.random.uniform(size=(len(chrom)))
-    # print ("randoms = ", randoms)
     new_integers = np.random.randint(0, 25, size=(len(chrom)))
-    # print ("new integers = ", new_integers)
-    # print ("chrom = ", chrom)
 
     chrom = np.where(randoms <= P, new_integers, chrom)
-    # print ("chrom z mutate = ", chrom)
 
     while np.sum(chrom) > 24:
        chrom[np.argmax(chrom)] -= 1
     while np.sum(chrom) < 24:
        chrom[np.argmin(chrom)] += 1
-    # print ("chrom after mutate = ", chrom)
 
     return chrom
 
