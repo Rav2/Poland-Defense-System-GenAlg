@@ -29,16 +29,21 @@ def main(A, B, C, eps, sim_steps = 100):
     for ii in range(0, steps):
         # 1 SELECTION
         p_sel = func.selection(pop, A, B, C, eps)
-        #print(p_sel)
+        # print("p_Sel = ", p_sel)
         best_fs.append(np.max(p_sel))
         new_pop = func.roulette_select(pop, p_sel, pop_size)
+        # print ("new_pop = ", new_pop)
         #TODO: BUG!
-        print(np.sum(new_pop)/100)
+        print("sum/4 = " , np.sum(new_pop)/pop_size)
         # 2 CROSSOVER
         pop = func.crossover(new_pop, pop_size, p_c)
+        print("sum/4 after cross = " , np.sum(pop)/pop_size)
+
         # 3 MUTATION
         for chromosome in pop:
             func.mutate(chromosome, p_m)
+        print("sum/4 after mutation = " , np.sum(pop)/pop_size)
+
         # 4 INVERSION
         probs_inv = np.random.uniform(len(pop))
         pop = np.where(probs_inv < p_i, func.inverse(pop), pop)
@@ -62,7 +67,7 @@ if __name__ == "__main__":
     a = 0.5
     b = 1.0
     c = 0.1
-    sim_steps = 400
+    sim_steps = 100
     epsilon = 10 ** -3
     results = np.zeros(100*16).reshape((100, 16))
     best_f =[]

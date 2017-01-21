@@ -211,23 +211,38 @@ def crossover(selected_pop, N, p_c):
     probabilities = [np.random.rand() for i in range(N)]
     index = 0
     for p in probabilities:
+        # print ("prob for child = ", p)
         if (p <= p_c):
             pairs = random.sample(selected_pop.tolist(), 2)
+            # print ("pairs = ", pairs)
             point = np.random.randint(1, len(pairs[0]))
+            # print ("point = ", point)
             direction = np.random.rand()
+            # print ("direction = ", direction)
             if (direction < 0.5):
                 change = np.sum(pairs[0][:point]) + np.sum(pairs[1][point:])
+                # print ("change = ", change)
                 new_pop[index] = pairs[0][:point]+pairs[1][point:]
+                # print ("new_pop[  ", index, "] = ", new_pop[index])
+
                 if change != 24:
                     fix_crossover(new_pop[index])
+                    # print("fixed new_pop[  ", index, "] = ", new_pop[index])
                 index += 1
+
 
 
             else:
                 change = np.sum(pairs[0][point:]) + np.sum(pairs[1][:point])
-                new_pop[index] = pairs[1][:point] + pairs[0][point:]
+                # print ("change = ", change)
+
+                new_pop[index] = pairs[1][point:] + pairs[0][:point]
+                # print ("new_pop[  ", index, "] = ", new_pop[index])
+
                 if change != 24:
                     fix_crossover(new_pop[index])
+                    # print("fixed new_pop[  ", index, "] = ", new_pop[index])
+
                 index += 1
 
 
@@ -250,10 +265,13 @@ def fix_crossover(individual):
         for ii in range(0, change):
             individual[np.random.randint(0, len(individual))] += 1
     else:
-        for ii in range(0, -change):
+        # for ii in range(0, -change):
+        iter = -change
+        while (iter!=0):
             rand_index = np.random.randint(0, len(individual))
             if(individual[rand_index] >0):
                 individual[rand_index] -= 1
+                iter -= 1
 
 
 def pmx_cross(chrom1, chrom2):
