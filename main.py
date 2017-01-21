@@ -20,33 +20,41 @@ def main(A, B, C, eps, sim_steps = 100):
         """
     steps = int(sim_steps) # simulation steps
     p_c = 0.7 # cross over probability
-    p_m = 10**-1 # mutation probability
-    p_i = 0.1  # inversion probability
+    p_m = 0.05 # mutation probability
+    p_i = 0.13  # inversion probability
 
-    pop_size = 100
+    pop_size = 50
     pop = func.init(pop_size, 'multinomial')
     best_fs = []
+    # fs = np.array(steps)
     for ii in range(0, steps):
-        # 1 SELECTION
+        ##### 1 SELECTION
         p_sel = func.selection(pop, A, B, C, eps)
-        # print("p_Sel = ", p_sel)
+        # print('####przed sel', np.sum(p_sel))
+        # print(np.max(p_sel))
         best_fs.append(np.max(p_sel))
         new_pop = func.roulette_select(pop, p_sel, pop_size)
-        # print ("new_pop = ", new_pop)
-        #TODO: BUG!
-        print("sum/4 = " , np.sum(new_pop)/pop_size)
-        # 2 CROSSOVER
+        # new_pop = func.tournament(pop, A, B, C, eps)
+        # print("sum/4 = " , np.sum(new_pop)/pop_size)
+        # print('po sel', np.sum(func.selection(new_pop, A, B, C, eps)))
+        ##### 2 CROSSOVER
         pop = func.crossover(new_pop, pop_size, p_c)
-        print("sum/4 after cross = " , np.sum(pop)/pop_size)
+        # print('po cross', np.sum(func.selection(pop, A, B, C, eps)))
+        # print("sum/4 after cross = " , np.sum(pop)/pop_size)
 
-        # 3 MUTATION
-        for chromosome in pop:
-            func.mutate(chromosome, p_m)
-        print("sum/4 after mutation = " , np.sum(pop)/pop_size)
+        ###### 3 MUTATION
+        for cc in range(0, len(pop)):
+            pop[cc] = func.mutate(pop[cc], p_m)
+        # print('po mut', np.sum(func.selection(pop, A, B, C, eps)))
+        # print("sum/4 after mutation = " , np.sum(pop)/pop_size)
 
-        # 4 INVERSION
-        probs_inv = np.random.uniform(len(pop))
-        pop = np.where(probs_inv < p_i, func.inverse(pop), pop)
+        ###### 4 INVERSION
+        probs_inv = np.random.uniform(size=len(pop))
+        for nn in range(0, len(probs_inv)):
+            if probs_inv[nn] < p_i:
+                pop[nn] = func.inverse(pop[nn])
+        # print('po inv', np.sum(func.selection(pop, A, B, C, eps)))
+        # pop = np.where(probs_inv < p_i, func.inverse(pop), pop)
 
     # after the GA steps >= simulation steps - i.e. the result of GA
     # the code below calculates results averaged over the whole population
@@ -63,24 +71,24 @@ def main(A, B, C, eps, sim_steps = 100):
 
 
 if __name__ == "__main__":
-    sim_n = 1  # number of simulations to be done
-    a = 0.5
-    b = 1.0
-    c = 0.1
+    sim_n = 100  # number of simulations to be done
+    A = 0.7
+    B = 0.02
+    C = 0.225
+    eps = 10 ** -2
     sim_steps = 100
-    epsilon = 10 ** -3
     results = np.zeros(100*16).reshape((100, 16))
     best_f =[]
     # inside this loop many simulations are done
     for ii in range(0, sim_n):
-        end_pop, vals, f_evol = main(a, b, c, epsilon, sim_steps)
-        f_vals = func.selection(end_pop, a, b, c, epsilon)
+        end_pop, vals, f_evol = main(A, B, C, eps, sim_steps)
+        f_vals = func.selection(end_pop, A, B, C, eps)
         index = np.argmax(f_vals)
         # print(((f_vals[index])))
         best_f.append(end_pop[index])
-
-        if int((ii+1) * 1000 / sim_n) % 10 == 0 and int((ii+1) / sim_n * 100) > 0:
-            print(int((ii+1) / sim_n * 100), '% done')
+        # print(ii, (ii) * 1000 / sim_n % 100 == 0)
+        if int((ii+1) * 1000 / sim_n) % 100 == 0:# and int((ii) / sim_n * 100) > 0:
+            print(int((ii+1) * 100/sim_n), '% done')
 
     av_result = np.zeros(16)
     for em in best_f:
@@ -89,4 +97,5 @@ if __name__ == "__main__":
     print(av_result, sum(av_result))
     terminal_view(av_result)
     draw_f_evolution(f_evol)
+    # print(end_pop)
 

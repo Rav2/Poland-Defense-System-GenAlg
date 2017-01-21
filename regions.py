@@ -24,7 +24,7 @@ def get_regions_list():
             warminsko_mazurskie, pomorskie, mazowieckie, kujawsko_pomorskie, wielkopolskie, lodzkie, swietokrzyskie]
 
 # shows possible threat to Poland's safety, takes value 1, 2 or 3, where 1 is the lowest and 3 the highest
-threat_coef = {'DE' : 1, 'CZ' : 1, 'SK' : 1, 'UA' : 2, 'BY' : 2, 'LT' : 1, 'RU' : 3}
+threat_coef = {'DE' : 1, 'CZ' : 0.5, 'SK' : 0.5, 'UA' : 2, 'BY' : 2, 'LT' : 0.5, 'RU' : 2.5}
 
 zachodnio_pomorskie = {
                         'name' : 'zachodnio-pomorskie',

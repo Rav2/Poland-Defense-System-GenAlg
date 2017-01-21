@@ -120,7 +120,8 @@ def f_chrom(chrom, A, B, C, eps):
     :return: Value of the function for a given chromosome.
     """
     f_vec = np.vectorize(f)
-    return np.sum(f_vec(chrom, eps, A, B, C, get_regions_list()))
+    res = np.sum(f_vec(chrom, eps, A, B, C, get_regions_list()))
+    return res
 
 
 def selection(population, A, B, C, eps):
@@ -203,6 +204,7 @@ def cross(chrom1, chrom2):
         chrom1[point:], chrom2[point:] = chrom2[point:], temp
         if change != 0:
             cross_fix(chrom1[point:], chrom2[point:], int(change))
+
 
 def crossover(selected_pop, N, p_c):
 
@@ -346,11 +348,20 @@ def mutate(chrom, P):
 
     chrom = np.where(randoms <= P, new_integers, chrom)
 
-    while np.sum(chrom) > 24:
-       chrom[np.argmax(chrom)] -= 1
-    while np.sum(chrom) < 24:
-       chrom[np.argmin(chrom)] += 1
+    #pos = chrom > 0
 
+    while np.sum(chrom) > 24:
+        smallest = np.min(np.where(chrom > 0, chrom, 1000))
+        index = np.argmax(chrom == smallest)
+        chrom[index] -= 1
+        # chrom[np.argmax(chrom)] -= 1
+
+    while np.sum(chrom) < 24:
+        largest = np.max(np.where(chrom < 24, chrom, -1000))
+        index = np.argmax(chrom == largest)
+        chrom[index] += 1
+
+        # chrom[np.argmin(chrom)] += 1
     return chrom
 
 
@@ -372,3 +383,16 @@ def inverse(chrom):
     return chrom
 
 
+def tournament(pop, A, B, C, eps):
+    new_pop = []
+    for ii in range(0, len(pop)):
+        a = 0
+        b = 0
+        while a == b:
+            a = np.random.randint(0, len(pop))
+            b = np.random.randint(0, len(pop))
+        if f_chrom(pop[a], A, B, C, eps)  >= f_chrom(pop[b], A, B, C, eps):
+            new_pop.append(pop[a])
+        else:
+            new_pop.append(pop[b])
+    return np.array(new_pop)

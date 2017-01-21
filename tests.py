@@ -34,9 +34,9 @@ def goal_func_test():
     Tests goal function for a given set of parameters and perfectly uniform distributions.
     :return: nothing
     """
-    A = 0.5
-    B = 1.0
-    C = 0.1
+    A = 0.7
+    B = 0.02
+    C = 0.2
     eps = 10**-3
     pop = [x*np.ones(16) for x in range(0, 25)]
 
@@ -45,9 +45,9 @@ def goal_func_test():
         vals = []
         for ii in range(0, len(chrom)):
             vals.append(func.f(chrom[ii], eps, A, B, C, get_regions_list()[ii]))
-        vals_total.append((vals[9]))#]sum(vals))
+        vals_total.append((vals[8]))#]sum(vals))
     terminal_view(vals)
-    print(vals_total)
+    print(vals_total, np.sum(vals_total))
     plt.plot(range(0, 25), vals_total)
     plt.show()
 
