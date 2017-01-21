@@ -19,7 +19,7 @@ def main(A, B, C, eps, sim_steps = 100):
         :return: Last population after GA simulation is finished.
         """
     steps = int(sim_steps) # simulation steps
-    p_c = 0.6 # cross over probability
+    p_c = 0.7 # cross over probability
     p_m = 10**-1 # mutation probability
     p_i = 0.1  # inversion probability
 
