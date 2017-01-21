@@ -8,11 +8,11 @@ def test():
     Main testing function to run all tests.
     :return: nothing
     """
-    # goal_func_test()
+    goal_func_test()
     # single_sim_test()
     # selection_test()
     # selection_mod_test()
-    crossover_test()
+    # crossover_test()
     # mutation_test()
     # init_test()
     # roulette_test()
@@ -37,7 +37,7 @@ def goal_func_test():
     A = 0.5
     B = 1.0
     C = 0.1
-    eps = 10**-4
+    eps = 10**-3
     pop = [x*np.ones(16) for x in range(0, 25)]
 
     vals_total = []
@@ -45,7 +45,7 @@ def goal_func_test():
         vals = []
         for ii in range(0, len(chrom)):
             vals.append(func.f(chrom[ii], eps, A, B, C, get_regions_list()[ii]))
-        vals_total.append(sum(vals))#]sum(vals))
+        vals_total.append((vals[9]))#]sum(vals))
     terminal_view(vals)
     print(vals_total)
     plt.plot(range(0, 25), vals_total)
