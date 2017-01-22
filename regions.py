@@ -24,7 +24,7 @@ def get_regions_list():
             warminsko_mazurskie, pomorskie, mazowieckie, kujawsko_pomorskie, wielkopolskie, lodzkie, swietokrzyskie]
 
 # shows possible threat to Poland's safety, takes value 1, 2 or 3, where 1 is the lowest and 3 the highest
-threat_coef = {'DE' : 1, 'CZ' : 0.5, 'SK' : 0.5, 'UA' : 2, 'BY' : 2, 'LT' : 0.5, 'RU' : 2.5}
+threat_coef = {'DE' : 0.5, 'CZ' : 0.5, 'SK' : 0.5, 'UA' : 2.0, 'BY' : 2.0, 'LT' : 0.5, 'RU' : 3.0}
 
 zachodnio_pomorskie = {
                         'name' : 'zachodnio-pomorskie',
@@ -126,7 +126,7 @@ podkarpackie = {
 
 lubelskie = {
                         'name' : 'lubelskie',
-                        'weight' : 1,
+                        'weight' : 1.0,
                         'pop' : 2165651,
                         'area' : 25122.46, # km^2
                         'DE' : 0.0, #km
@@ -142,7 +142,7 @@ lubelskie = {
 
 podlaskie = {
                         'name' : 'podlaskie',
-                        'weight' : 2, # the only NATO passage to Lithuania
+                        'weight' : 1.5, # the only NATO passage to Lithuania
                         'pop' : 1198690,
                         'area' : 20187.02, # km^2
                         'DE' : 0.0, #km
@@ -184,7 +184,7 @@ pomorskie = {
 
 mazowieckie = {
                         'name' : 'mazowieckie',
-                        'weight' : 3, #capital city
+                        'weight' : 2, #capital city
                         'pop' : 5301760,
                         'area' : 35558.47, # km^2
                         'DE' : 0.0, #km

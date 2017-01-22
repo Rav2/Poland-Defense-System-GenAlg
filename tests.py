@@ -32,23 +32,34 @@ def init_test():
 def goal_func_test():
     """
     Tests goal function for a given set of parameters and perfectly uniform distributions.
+    Shows a goal function for selected regions as a function of brigades in the region.
     :return: nothing
     """
-    A = 0.7
-    B = 0.02
-    C = 0.2
-    eps = 10**-3
+    A = 0.35
+    B = 0.5
+    C = 0.1
+    eps = 10**-2
     pop = [x*np.ones(16) for x in range(0, 25)]
 
     vals_total = []
+    f2 = []
+    f3 = []
     for chrom in pop:
         vals = []
         for ii in range(0, len(chrom)):
             vals.append(func.f(chrom[ii], eps, A, B, C, get_regions_list()[ii]))
-        vals_total.append((vals[8]))#]sum(vals))
+        vals_total.append((vals[0]))
+        f2.append((vals[7]))
+        f3.append((vals[8]))
+
     terminal_view(vals)
     print(vals_total, np.sum(vals_total))
-    plt.plot(range(0, 25), vals_total)
+    plt.xlabel('liczba brygad')
+    plt.ylabel('funkcja celu wojewodztwa')
+    plt.plot(range(0, 25), vals_total,'ro-')
+    plt.plot(range(0, 25), f2, 'bo-')
+    plt.plot(range(0, 25), f3, 'go-')
+    plt.legend([get_regions_names()[0], get_regions_names()[7], get_regions_names()[8]])
     plt.show()
 
 def selection_test():

@@ -18,43 +18,35 @@ def main(A, B, C, eps, sim_steps = 100):
         required for the goal function calculation.
         :return: Last population after GA simulation is finished.
         """
-    steps = int(sim_steps) # simulation steps
-    p_c = 0.7 # cross over probability
-    p_m = 0.05 # mutation probability
-    p_i = 0.13  # inversion probability
+    steps = int(sim_steps)  # simulation steps
+    p_c = 0.15  # cross over probability # 0.15
+    p_m = 0.0005  # mutation probability # 0.0005
+    p_i = 0.0001  # inversion probability # 0.0001
 
-    pop_size = 50
+    pop_size = 200  # 200
+    ### INITIALIZATION ###
     pop = func.init(pop_size, 'multinomial')
-    best_fs = []
-    # fs = np.array(steps)
+    best_fs = [] # goal function of the best one in populationin each step
+    fs = [] # summary goal function of the population in each step
     for ii in range(0, steps):
         ##### 1 SELECTION
         p_sel = func.selection(pop, A, B, C, eps)
-        # print('####przed sel', np.sum(p_sel))
-        # print(np.max(p_sel))
+        fs.append(np.sum(p_sel))
         best_fs.append(np.max(p_sel))
         new_pop = func.roulette_select(pop, p_sel, pop_size)
-        # new_pop = func.tournament(pop, A, B, C, eps)
-        # print("sum/4 = " , np.sum(new_pop)/pop_size)
-        # print('po sel', np.sum(func.selection(new_pop, A, B, C, eps)))
+
         ##### 2 CROSSOVER
         pop = func.crossover(new_pop, pop_size, p_c)
-        # print('po cross', np.sum(func.selection(pop, A, B, C, eps)))
-        # print("sum/4 after cross = " , np.sum(pop)/pop_size)
 
         ###### 3 MUTATION
         for cc in range(0, len(pop)):
             pop[cc] = func.mutate(pop[cc], p_m)
-        # print('po mut', np.sum(func.selection(pop, A, B, C, eps)))
-        # print("sum/4 after mutation = " , np.sum(pop)/pop_size)
 
         ###### 4 INVERSION
         probs_inv = np.random.uniform(size=len(pop))
         for nn in range(0, len(probs_inv)):
             if probs_inv[nn] < p_i:
                 pop[nn] = func.inverse(pop[nn])
-        # print('po inv', np.sum(func.selection(pop, A, B, C, eps)))
-        # pop = np.where(probs_inv < p_i, func.inverse(pop), pop)
 
     # after the GA steps >= simulation steps - i.e. the result of GA
     # the code below calculates results averaged over the whole population
@@ -64,38 +56,46 @@ def main(A, B, C, eps, sim_steps = 100):
         for ii in range(0, 16):
             for em in pop:
                 vals[ii] += em[ii]
-        vals /= 100
+        vals /= pop_size
         terminal_view(vals)
 
-    return pop, vals, np.array(best_fs)
+    return pop, vals, np.array(best_fs), fs
 
 
 if __name__ == "__main__":
-    sim_n = 100  # number of simulations to be done
-    A = 0.7
-    B = 0.02
-    C = 0.225
-    eps = 10 ** -2
-    sim_steps = 100
-    results = np.zeros(100*16).reshape((100, 16))
-    best_f =[]
+    sim_n = 1  # number of simulations to be done #20 is OK
+    # PARAMETERS OF THE SIMULATION
+    A = 0.35  # 0.35
+    B = 0.5  # 0.5
+    C = 0.1  # 0.1
+    eps = 10 ** -2 # 10 ** -2
+    sim_steps = 2000  # 800
+
+    # SIMULATION LOOP
     # inside this loop many simulations are done
+    best_f = []
     for ii in range(0, sim_n):
-        end_pop, vals, f_evol = main(A, B, C, eps, sim_steps)
+        end_pop, vals, f_evol, fs = main(A, B, C, eps, sim_steps)
         f_vals = func.selection(end_pop, A, B, C, eps)
         index = np.argmax(f_vals)
-        # print(((f_vals[index])))
         best_f.append(end_pop[index])
-        # print(ii, (ii) * 1000 / sim_n % 100 == 0)
-        if int((ii+1) * 1000 / sim_n) % 100 == 0:# and int((ii) / sim_n * 100) > 0:
+        if int((ii+1) * 1000 / sim_n) % 100 == 0: # and int((ii) / sim_n * 100) > 0:
             print(int((ii+1) * 100/sim_n), '% done')
 
     av_result = np.zeros(16)
     for em in best_f:
         av_result += em
     av_result /= len(best_f)
-    print(av_result, sum(av_result))
-    terminal_view(av_result)
-    draw_f_evolution(f_evol)
-    # print(end_pop)
+    # print(av_result, sum(av_result))
+    terminal_view(av_result) # prints out solution of the best one in population, averaged over all simulations
+
+    # UNCOMMENT TO SEE GOAL FUNCTION OF THE POPULATION FROM THE LAST SIMULATION
+    plt.plot(range(0, sim_steps), fs)
+    plt.ylim(ymin=0)
+    plt.ylabel("funkcja przystosowania populacji")
+    plt.xlabel("krok symulacji")
+    plt.show()
+
+    # UNCOMMENT TO SEE GOAL FUNCTION OF THE BEST ONE IN POPULATION FROM THE LAST SIMULATION
+    # draw_f_evolution(f_evol)
 
